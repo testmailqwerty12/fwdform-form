@@ -42,7 +42,7 @@ $(function(){
         var url = form.attr('action');
 
         grecaptcha.ready(function() {
-            grecaptcha.execute('6LdA-MYUAAAAAICf8N9LNhzp2l1PgnFS7ocDFlJu_', {action: 'create_contact'}).then(function(token) {
+            grecaptcha.execute('6LdA-MYUAAAAAICf8N9LNhzp2l1PgnFS7ocDFlJu', {action: 'create_contact'}).then(function(token) {
               $('#idForm').prepend('<input type="hidden" name="g-recaptcha-response" value="' + token + '">');
               $.ajax({
                      url: form.attr("action"),
