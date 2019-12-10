@@ -6,6 +6,7 @@
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
+<script src="https://www.google.com/recaptcha/api.js?render=6LdA-MYUAAAAAICf8N9LNhzp2l1PgnFS7ocDFlJu"></script>
 </head>
 <body>
 <form action="https://test-mail-fwd-form.herokuapp.com/form/7e13e77b-65b1-441d-9b12-4b5a3d693920" method="POST" id="idForm">
@@ -40,17 +41,24 @@ $(function(){
         var form = $(this);
         var url = form.attr('action');
 
-        $.ajax({
-               url: form.attr("action"),
-                method: "POST",
-                data: form.serialize(),
-                dataType: "json",
-               success: function(data)
-               {
-                   alert("Form submitted");
-                   $('#idForm')[0].reset();
-               }
-             });
+        grecaptcha.ready(function() {
+            grecaptcha.execute('6LdA-MYUAAAAAICf8N9LNhzp2l1PgnFS7ocDFlJu_', {action: 'create_contact'}).then(function(token) {
+              $('#idForm').prepend('<input type="hidden" name="g-recaptcha-response" value="' + token + '">');
+              $.ajax({
+                     url: form.attr("action"),
+                      method: "POST",
+                      data: form.serialize(),
+                      dataType: "json",
+                     success: function(data)
+                     {
+                         alert("Form submitted");
+                         $('#idForm')[0].reset();
+                     }
+                   });
+            });
+        });
+
+
     });
 })
 </script>
