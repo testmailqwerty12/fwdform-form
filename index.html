@@ -70,7 +70,7 @@ $(function(){
                         // debugger
                          alert("Form submitted");
                          $('#idForm')[0].reset();
-                     }
+                     },
                      error: function(jqXHR, textStatus, errorThrown) {
                         alert('An error occurred... Look at the console (F12 or Ctrl+Shift+I, Console tab) for more information!');
 
@@ -81,7 +81,7 @@ $(function(){
                         console.log(textStatus);
                         console.log('errorThrown:');
                         console.log(errorThrown);
-                    },
+                    }
                    });
         // grecaptcha.ready(function() {
         //     grecaptcha.execute('6LcQJscUAAAAAElOeouf3EZY6fHpURnZcG9zLoii', {action: 'create_contact'}).then(function(token) {
