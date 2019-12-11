@@ -6,7 +6,7 @@
   src="https://code.jquery.com/jquery-3.4.1.js"
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
-<script src="https://www.google.com/recaptcha/api.js?render=6LdA-MYUAAAAAICf8N9LNhzp2l1PgnFS7ocDFlJu"></script>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <style type="text/css">
   .grecaptcha-badge {
     display: none !important;
@@ -33,6 +33,7 @@
     <div>
         <input type="text" name="_gotcha" style="display:none;" />
     </div>
+    <div class="g-recaptcha" data-sitekey="6LcQJscUAAAAAElOeouf3EZY6fHpURnZcG9zLoii"></div>
     <div>
         <!-- <input name="redirect" type="hidden" value="https://<YOUR_WEBSITE>/<YOUR_POST_SUBMISSION_PAGE>"> -->
         <input type="submit" value="Submit">
@@ -46,9 +47,6 @@ $(function(){
         var form = $(this);
         var url = form.attr('action');
 
-        grecaptcha.ready(function() {
-            grecaptcha.execute('6LdA-MYUAAAAAICf8N9LNhzp2l1PgnFS7ocDFlJu', {action: 'create_contact'}).then(function(token) {
-              $('#idForm').prepend('<input type="hidden" name="g-recaptcha-response" value="' + token + '">');
               $.ajax({
                      url: form.attr("action"),
                       method: "POST",
@@ -56,13 +54,16 @@ $(function(){
                       dataType: "json",
                      success: function(data)
                      {
-                        debugger
+                        // debugger
                          alert("Form submitted");
                          $('#idForm')[0].reset();
                      }
                    });
-            });
-        });
+        // grecaptcha.ready(function() {
+        //     grecaptcha.execute('6LcQJscUAAAAAElOeouf3EZY6fHpURnZcG9zLoii', {action: 'create_contact'}).then(function(token) {
+        //       $('#idForm').prepend('<input type="hidden" name="g-recaptcha-response" value="' + token + '">');
+        //     });
+        // });
 
 
     });
