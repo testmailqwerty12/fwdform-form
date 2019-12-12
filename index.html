@@ -55,7 +55,7 @@ s0.parentNode.insertBefore(s1,s0);
 
 
 
-<form action="https://test-mail-fwd-form.herokuapp.com/form/7e13e77b-65b1-441d-9b12-4b5a3d693920" method="POST" id="newsletterForm">
+<form action="https://test-mail-fwd-form.herokuapp.com/form/19220ed2-d2e1-4757-b72e-7b92012681c7" method="POST" id="newsletterForm">
     <div>
         E-mail: <input name="email" type="text">
     </div>
@@ -126,7 +126,7 @@ $(function(){
         var url = form.attr('action');
 
         grecaptcha.ready(function() {
-            grecaptcha.execute('6LcQJscUAAAAAElOeouf3EZY6fHpURnZcG9zLoii', {action: 'create_contact'}).then(function(token) {
+            grecaptcha.execute('6LdA-MYUAAAAAICf8N9LNhzp2l1PgnFS7ocDFlJu', {action: 'create_contact'}).then(function(token) {
               $('#newsletterForm').prepend('<input type="hidden" name="g-recaptcha-response" value="' + token + '">');
               $.ajax({
                      url: form.attr("action"),
