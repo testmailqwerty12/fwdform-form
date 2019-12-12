@@ -27,7 +27,7 @@ s0.parentNode.insertBefore(s1,s0);
 <!--End of Tawk.to Script-->
 </head>
 <body>
-<form action="https://test-mail-fwd-form.herokuapp.com/form/7e13e77b-65b1-441d-9b12-4b5a3d693920" method="POST" id="idForm">
+<form action="https://test-mail-fwd-form.herokuapp.com/form/7e13e77b-65b1-441d-9b12-4b5a3d693920" method="POST" id="contactForm">
     <div>
         Name: <input name="name" type="text">
     </div>
@@ -52,9 +52,25 @@ s0.parentNode.insertBefore(s1,s0);
         <input type="submit" value="Submit">
     </div>
 </form>
+
+
+
+<form action="https://test-mail-fwd-form.herokuapp.com/form/7e13e77b-65b1-441d-9b12-4b5a3d693920" method="POST" id="newsletterForm">
+    <div>
+        E-mail: <input name="email" type="text">
+    </div>
+    <div>
+        <input type="text" name="_gotcha" style="display:none;" />
+    </div>
+    <div>
+        <!-- <input name="redirect" type="hidden" value="https://<YOUR_WEBSITE>/<YOUR_POST_SUBMISSION_PAGE>"> -->
+        <input type="submit" value="Submit">
+    </div>
+</form>
+
 <script type="text/javascript">
 $(function(){
-    $("#idForm").submit(function(e) {
+    $("#contactForm").submit(function(e) {
         e.preventDefault();
 
         var form = $(this);
@@ -69,7 +85,7 @@ $(function(){
                      {
                         // debugger
                          alert("Form submitted");
-                         $('#idForm')[0].reset();
+                         $('#contactForm')[0].reset();
                      },
                      error: function(jqXHR, textStatus, errorThrown) {
                         // alert('An error occurred... Look at the console (F12 or Ctrl+Shift+I, Console tab) for more information!');
@@ -95,9 +111,58 @@ $(function(){
                    });
         // grecaptcha.ready(function() {
         //     grecaptcha.execute('6LcQJscUAAAAAElOeouf3EZY6fHpURnZcG9zLoii', {action: 'create_contact'}).then(function(token) {
-        //       $('#idForm').prepend('<input type="hidden" name="g-recaptcha-response" value="' + token + '">');
+        //       $('#contactForm').prepend('<input type="hidden" name="g-recaptcha-response" value="' + token + '">');
         //     });
         // });
+
+
+    });
+
+
+    $("#newsletterForm").submit(function(e) {
+        e.preventDefault();
+
+        var form = $(this);
+        var url = form.attr('action');
+
+        grecaptcha.ready(function() {
+            grecaptcha.execute('6LcQJscUAAAAAElOeouf3EZY6fHpURnZcG9zLoii', {action: 'create_contact'}).then(function(token) {
+              $('#newsletterForm').prepend('<input type="hidden" name="g-recaptcha-response" value="' + token + '">');
+              $.ajax({
+                     url: form.attr("action"),
+                      method: "POST",
+                      data: form.serialize(),
+                      dataType: "json",
+                     success: function(data, textStatus, jqXHR)
+                     {
+                        // debugger
+                         alert("Form submitted");
+                         $('#newsletterForm')[0].reset();
+                     },
+                     error: function(jqXHR, textStatus, errorThrown) {
+                        // alert('An error occurred... Look at the console (F12 or Ctrl+Shift+I, Console tab) for more information!');
+
+                        // $('#result').html('<p>status code: '+jqXHR.status+'</p><p>errorThrown: ' + errorThrown + '</p><p>jqXHR.responseText:</p><div>'+jqXHR.responseText + '</div>');
+                        // debugger
+                        // console.log('jqXHR:');
+                        // console.log(jqXHR);
+                        // console.log('textStatus:');
+                        // console.log(textStatus);
+                        // console.log('errorThrown:');
+                        // console.log(errorThrown);
+                        if(jqXHR.responseText == "captcha-invalid"){
+                          alert("Invalid captcha");
+                        }
+                        else if(jqXHR.responseText == "email-blank"){
+                          alert("Email blank");
+                        }
+                        else{
+                          alert("Error");
+                        }
+                    }
+                   });
+            });
+        });
 
 
     });
